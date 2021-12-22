@@ -1,24 +1,73 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# テーブル設計
 
-Things you may want to cover:
+## users table
 
-* Ruby version
+| Column             | Type   | Options                   |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| family_name        | string | null: false               |
+| first_name         | string | null: false               |
+| family_name_kana   | string | null: false               |
+| first_name_kana    | string | null: false               |
+| birth_day          | date   | null: false               |
 
-* System dependencies
+### Association
 
-* Configuration
+* has_many :items
+* belongs_to: card
+* belongs_to: shipping address
 
-* Database creation
+## shipping address table
 
-* Database initialization
+| Column             | Type    | Options                        |
+| ------------------ | ------- | ------------------------------ |
+| family_name        | string  | null: false                    |
+| first_name         | string  | null: false                    |
+| family_name_kana   | string  | null: false                    |
+| first_name_kana    | string  | null: false                    |
+| post_code          | string  | null: false                    |
+| prefecture         | string  | null: false                    |
+| city               | string  | null: false                    |
+| address            | string  | null: false                    |
+| building_name      | string  |                                |
+| phone_number       | string  | null: false                    |
+| user_id            | integer | null: false, foreign_key: true |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
 
-* Deployment instructions
+## card table
 
-* ...
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| user_id       | references | null: false, foreign_key: true |
+| cache_number  | integer    | null: false, foreign_key: true |
+| customer_id   | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+
+# items table
+
+| Column      | Type       | Options                        |
+| ----------- | ---------- | ------------------------------ |
+| image       | string     | null: false                    |
+| items_name  | string     | null: false                    |
+| explanation | string     | null: false                    |
+| price       | string     | null: false                    |
+| category    | string     | null: false                    |
+| situation   | string     | null: false                    |
+| cost        | integer    | null: false                    |
+| area        | string     | null: false                    |
+| days        | string     | null: false                    |
+| user_id     | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
