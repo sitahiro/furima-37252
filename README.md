@@ -22,15 +22,15 @@
 
 ## shippings table
 
-| Column        | Type       | Options     |
-| ------------- | ---------- | ----------- |
-| post_code     | string     | null: false |
-| prefecture_id | integer    | null: false |
-| city          | string     | null: false |
-| address       | string     | null: false |
-| building_name | string     |             |
-| phone_number  | string     | null: false |
-| card          | references | null: false |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| post_code     | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| city          | string     | null: false                    |
+| address       | string     | null: false                    |
+| building_name | string     |                                |
+| phone_number  | string     | null: false                    |
+| card          | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -42,7 +42,6 @@
 | --------- | ---------- | ------------------------------ |
 | user      | references | null: false, foreign_key: true |
 | item      | references | null: false, foreign_key: true |
-| shipping  | references | null: false                    |
 
 ### Association
 
@@ -63,7 +62,6 @@
 | prefecture_id | integer    | null: false                    |
 | days_id       | integer    | null: false                    |
 | user          | references | null: false, foreign_key: true |
-| card          | references | null: false                    |
 
 ### Association
 
