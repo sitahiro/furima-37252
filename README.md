@@ -25,12 +25,12 @@
 | Column        | Type       | Options                        |
 | ------------- | ---------- | ------------------------------ |
 | post_code     | string     | null: false                    |
-| prefecture_id | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
 | city          | string     | null: false                    |
 | address       | string     | null: false                    |
 | building_name | string     |                                |
 | phone_number  | string     | null: false                    |
-| item          | references | null: false, foreign_key: true |
+| card          | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -41,27 +41,31 @@
 | Column    | Type       | Options                        |
 | --------- | ---------- | ------------------------------ |
 | user      | references | null: false, foreign_key: true |
+| item      | references | null: false, foreign_key: true |
 | shipping  | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
+- belongs_to :item
 - has_one :shipping
 
 # items table
 
-| Column       |  Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| items_name   | string     | null: false                    |
-| explanation  | string     | null: false                    |
-| price        | text       | null: false                    |
-| category_id  | integer    | null: false                    |
-| situation_id | integer    | null: false                    |
-| cost_id      | integer    | null: false                    |
-| area_id      | integer    | null: false                    |
-| days_id      | integer    | null: false                    |
-| user         | references | null: false, foreign_key: true |
+| Column        |  Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| items_name    | string     | null: false                    |
+| explanation   | text       | null: false                    |
+| price         | integer    | null: false                    |
+| category_id   | integer    | null: false                    |
+| situation_id  | integer    | null: false                    |
+| cost_id       | integer    | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| days_id       | integer    | null: false                    |
+| user          | references | null: false, foreign_key: true |
+| card          | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
+- has_one :card
