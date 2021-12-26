@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  let(:item) { FactoryBot.create(:item) }
   describe '商品情報入力' do
     before do
       @item = FactoryBot.build(:item)
@@ -105,6 +104,11 @@ RSpec.describe Item, type: :model do
         @item.days_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Days must be other than 1")
+      end
+      it 'ユーザーが紐付いていなければ出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
