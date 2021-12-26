@@ -1,16 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
+  let(:item) { FactoryBot.create(:item) }
   describe '商品情報入力' do
     before do
       @item = FactoryBot.build(:item)
     end
+
     context '商品情報入力が成功した時' do
       it 'image、items_name、explanation、price、category_id、situation_id、cost_id、prefeuture_id、days_idがあれば出品できる' do
         expect(@item).to be_valid
       end
       it 'priceが半角数字なら出品できる' do
         @item.price = 2000
+        expect(@item).to be_valid
+      end
+      it 'priceが300円以上なら出品できる' do
+        @item.price = 300
+        expect(@item).to be_valid
+      end
+      it 'priceが9_999_999以内なら出品できる' do
+        @item.price = 9_999_999
         expect(@item).to be_valid
       end
       it 'category_idが選択されていれば出品できる' do
@@ -59,7 +69,17 @@ RSpec.describe Item, type: :model do
       it 'priceが全角数字だと出品できない' do
         @item.price = "２０００"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price Out of setting range", "Price Half-width number")
+        expect(@item.errors.full_messages).to include("Price Half-width number")
+      end
+      it 'priceが300円未満では出品できない' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price Out of setting range")
+      end
+      it 'priceが9_999_999円を超えると出品できない' do
+        @item.price = 10_000_000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price Out of setting range")
       end
       it 'category_idが未選択だと出品できない' do
         @item.category_id = 1
