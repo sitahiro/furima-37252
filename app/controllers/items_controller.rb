@@ -22,12 +22,12 @@ class ItemsController < ApplicationController
   def show
   end 
 
-  def edit
-  end
+  #def edit
+  #end
 
-  def update
-    @item.update(item_params)
-  end
+  #def update
+    #@item.update(item_params)
+  #end
 
   private
 
