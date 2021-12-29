@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :contributor_confirmation, only: [:edit, :update]
 
   def index
-    @items = Item.all.order(id: "DESC")
+    @items = Item.all.order(id: 'DESC')
   end
 
   def new
@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-  end 
+  end
 
   def edit
   end
@@ -37,7 +37,8 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:items_name, :explanation, :price, :category_id, :situation_id, :cost_id, :prefecture_id,:days_id, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:items_name, :explanation, :price, :category_id, :situation_id, :cost_id, :prefecture_id,
+                                 :days_id, :image).merge(user_id: current_user.id)
   end
 
   def set_item
