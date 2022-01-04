@@ -3,6 +3,7 @@ class CardsController < ApplicationController
 
   def index
     @order = Order.new
+    @item = Item.find(params[:item_id])
   end
 
   def create
