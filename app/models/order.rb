@@ -11,6 +11,7 @@ class Order
     validates :phone_number, format: {with: /\A\d{10,11}\z/}
     validates :item_id
     validates :user_id
+    validates :token
   end
   
   def save
