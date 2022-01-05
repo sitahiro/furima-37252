@@ -1,7 +1,7 @@
-class CardsController < ApplicationController
-  before_action :authenticate_user!, except: :index
-  before_action :set_order
-  before_action :move_to_index
+class OrdersController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+  before_action :set_order, only: [:index, :create]
+  before_action :prevent_url, only: [:index, :create]
 
 
   def index
@@ -30,8 +30,8 @@ class CardsController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def move_to_index, except: :index
-    unless current_user && @item.order == nil
+  def prevent_url
+    if @item.user_id == current_user.id || @item.card != nil
       redirect_to root_path
     end
   end
