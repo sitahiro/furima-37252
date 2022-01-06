@@ -9,7 +9,7 @@ RSpec.describe Order, type: :model do
     end
 
     context '商品購入が成功した時' do
-      it 'token、post_code、prefeuture_id、city、address、building_name、phone_numberがあれば出品できる' do
+      it 'token、post_code、prefeuture_id、city、address、phone_numberがあれば出品できる' do
         expect(@order).to be_valid
       end
       it 'post_codeにハイフンがあれば購入できる' do
@@ -18,6 +18,10 @@ RSpec.describe Order, type: :model do
       end
       it 'prefecture_idが選択されていれば出品できる' do
         @order.prefecture_id = 2
+        expect(@order).to be_valid
+      end
+      it 'building_nameが空でも購入できる' do
+        @order.building_name = nil
         expect(@order).to be_valid
       end
       it 'phone_numberが数字なら購入できる' do
@@ -77,6 +81,26 @@ RSpec.describe Order, type: :model do
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number is invalid")
       end  
+      it 'phone_numberが9桁以下だと購入できない' do
+        @order.phone_number = '090123456'
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'phone_numberが12桁以上だと購入できない' do
+        @order.phone_number = '090123456789'
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'ユーザーが紐付いていなければ出品できない' do
+        @order.user_id = nil
+        @order.valid?
+        expect(@order.errors.full_messages).to include("User can't be blank")
+      end
+      it '商品が紐付いていなければ出品できない' do
+        @order.item_id = nil
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Item can't be blank")
+      end
     end
   end
 end
